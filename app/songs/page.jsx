@@ -1,7 +1,7 @@
 export default function Page(){
 	return(
 		<section>
-			<p>song</p>
+			<h1>Songs</h1>
 		</section>
 	);
 }
