@@ -28,15 +28,17 @@ export default function RootLayout({ children }) {
       >
         <div>
           <div className="relative flex justify-center items-center">
-            <div className="absolute left-0 top-[-60px]">
-              <Image className="" src="/logo.png" height={300} width={300}/>
+            <div className="absolute left-0 top-[0]">
+              <Image className="" src="/logo.png" alt="logo" height={200} width={200}/>
             </div>
             <div className="flex justify-center">
               <Navbar />
             </div>
           </div>
         </div>
-        {children}
+        <div className="mx-16">
+          {children}
+        </div>
       </body>
     </html>
   );

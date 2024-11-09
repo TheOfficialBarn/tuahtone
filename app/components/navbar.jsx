@@ -4,7 +4,7 @@ const navItems = {
   '/': { //This is the path for the home page. It has to exist as a folder in the app directory
     name: 'home', //This is the name of what appears on the nav bar
   },
-  '/auth': {
+  '/login': {
     name: 'login',
   },
   '/search': {
