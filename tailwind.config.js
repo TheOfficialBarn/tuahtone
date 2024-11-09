@@ -12,6 +12,7 @@ module.exports = {
         foreground: "var(--foreground)",
         mainbackground: "#1F222C",
         searchbackground: "#2D3240",
+        songblockbackground: "#1E1E1E"
       },
     },
   },

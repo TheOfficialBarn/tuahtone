@@ -19,3 +19,8 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+h2 {
+  font-size: larger;
+  text-decoration: underline;
+}
