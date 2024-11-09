@@ -1,5 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import { Navbar } from "./components/navbar";
+import Image from "next/image";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,8 +23,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased mx-4 px-4 mt-8 lg:mx-auto
+        bg-fixed h-screen bg-mainbackground`}
       >
+        <div>
+          <div className="flex items-center justify-between">
+            {/* New item on the left */}
+            <div>{/* Your new item here */}<Image src="/logo.png" height={300} width={300}/></div>
+            {/* Navbar remains centered */}
+            <div className="flex justify-center">
+              <Navbar />
+            </div>
+          </div>
+        </div>
         {children}
       </body>
     </html>
