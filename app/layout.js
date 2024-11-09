@@ -27,10 +27,10 @@ export default function RootLayout({ children }) {
         bg-fixed h-screen bg-mainbackground`}
       >
         <div>
-          <div className="flex items-center justify-between">
-            {/* New item on the left */}
-            <div>{/* Your new item here */}<Image src="/logo.png" height={300} width={300}/></div>
-            {/* Navbar remains centered */}
+          <div className="relative flex justify-center items-center">
+            <div className="absolute left-0 top-[-60px]">
+              <Image className="" src="/logo.png" height={300} width={300}/>
+            </div>
             <div className="flex justify-center">
               <Navbar />
             </div>
