@@ -42,10 +42,10 @@ export default function SongsBlock({ playlistId, language, flag }) {
 
     return (
 		<div className="p-16 bg-songblockbackground rounded-xl">
-			<h2 className='mb-2'>Top 10 {language} Songs {flag}</h2>
+			<h2 className='mb-8 flex justify-center font-bold text-2xl '>Top 10 {language} Songs {flag}</h2>
             <ul>
                 {tracks.map((track, index) => (
-                    <li key={index}>
+                    <li key={index} className='text-center hover:text-orange-500 transition-colors duration-300'>
                         {track.name} by {track.artists.map(artist => artist.name).join(', ')}
                     </li>
                 ))}
