@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
 	    <div className="absolute right-4 top-4"><ProfileButton/></div>
             </div>
           </div>
-        <div className="mx-16">
+        <div className="mx-16 pb-8">
           {children}
         </div>
       </body>
