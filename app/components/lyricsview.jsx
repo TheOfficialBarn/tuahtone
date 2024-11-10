@@ -1,4 +1,4 @@
-export default function Page({songDetails}) {
+export default function LyricsView({songDetails}) {
     return (
         <div className="flex flex-col items-center justify-center">
             <h1>TITI ME PREGUNTO By Bad Bunny</h1>
