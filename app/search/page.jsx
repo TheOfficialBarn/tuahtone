@@ -3,6 +3,7 @@ import SongsBlock from "../components/songsblock";
 export default function Page(){
 	return(
 		<section>
+				<h1>Search</h1>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
 					<SongsBlock language="Spanish" flag="🇲🇽" playlistId="37i9dQZF1EIdXls7Ic0RlM"/>
 					<SongsBlock language="English" flag="🇺🇸" playlistId="37i9dQZF1DX0kbJZpiYdZl"/>

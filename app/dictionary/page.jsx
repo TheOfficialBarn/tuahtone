@@ -1,10 +1,9 @@
-import Flashcard from "../components/flashcard";
-
+import DictBlock from "../components/dictblock";
 export default function Page(){
 	return(
 		<section>
-			<p>dictionary</p>
-			<Flashcard/>
+			<h1>Dictionary: Your Song Word Bank</h1>
+			<DictBlock/>
 		</section>
 	);
 }
