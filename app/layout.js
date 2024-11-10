@@ -1,7 +1,10 @@
+// app/layout.js
 import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "./components/navbar";
 import Image from "next/image";
+import ProfileButton from "./components/profile_button";
+import { AuthProvider } from "./context/AuthContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,18 +24,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased lg:mx-auto bg-fixed h-screen bg-mainbackground`}>
+    <AuthProvider>
+      <html lang="en">
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased lg:mx-auto bg-fixed h-screen bg-mainbackground`}>
           <div className="relative flex justify-center items-center bg-gradient-to-b from-navbackground">
             <div className="pt-4">
-            <div className="absolute left-4 top-4"><Image className="" src="/logo.png" alt="logo" height={200} width={200}/></div>
-            <div className="flex justify-center"><Navbar /></div>
+              <div className="absolute left-4 top-4">
+                <Image className="" src="/logo.png" alt="logo" height={200} width={200}/>
+              </div>
+              <div className="flex justify-center"><Navbar /></div>
+              <div className="absolute right-4 top-4"><ProfileButton/></div>
             </div>
           </div>
-        <div className="mx-16 pb-8">
-          {children}
-        </div>
-      </body>
-    </html>
+          <div className="mx-16 pb-8">
+            {children}
+          </div>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
