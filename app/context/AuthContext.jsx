@@ -1,9 +1,9 @@
-// app/context/AuthContext.jsx
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '../lib/firebase';
+import { auth, db } from '../lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 
 const AuthContext = createContext();
 
@@ -14,8 +14,13 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+        setUser({ ...currentUser, ...userDoc.data() });
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
 
@@ -23,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );

@@ -1,4 +1,3 @@
-// app/dictionary/page.jsx
 "use client";
 
 import React from 'react';
@@ -11,7 +10,7 @@ export default function Page() {
   return (
     <section>
       {user ? (
-        <h1>Dictionary: Your Song Word Bank</h1>
+        <h1>Welcome to your dictionary, {user.email}</h1>
       ) : (
         <>
           <h1>Log In to Access Your Dictionary</h1>
