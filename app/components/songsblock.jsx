@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 const clientId = '86f0ed8961d4461597f4ccc7da0ce691';
@@ -7,8 +8,13 @@ const clientSecret = '95453bb100d44dfaaa862fffae3f7d83';
 
 export default function SongsBlock({ playlistId, language, flag }) {
     const [tracks, setTracks] = useState([]);
-    const [lyrics, setLyrics] = useState({}); // Store lyrics for each track
+    const [lyrics, setLyrics] = useState({});
+    const router = useRouter();
 
+    const handleSongClick = (track, artist) => {
+        const query = `track=${encodeURIComponent(track)}&artist=${encodeURIComponent(artist)}`;
+        router.push(`/search/lyricsview?${query}`);
+      };
     useEffect(() => {
         const getAccessToken = async () => {
             const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -40,26 +46,15 @@ export default function SongsBlock({ playlistId, language, flag }) {
         fetchTracks();
     }, [playlistId]);
 
-    // Fetch lyrics for a specific track
-    const fetchLyrics = async (track, artist) => {
-        try {
-            const response = await axios.get(`https://lyrist.vercel.app/api/${track}/${artist}`);
-            setLyrics(prevLyrics => ({ ...prevLyrics, [track]: response.data.lyrics }));
-        } catch (error) {
-            console.error("Error fetching lyrics:", error);
-        }
-    };
-
     return (
         <div className="p-16 bg-songblockbackground rounded-xl">
             <h2 className='flex justify-center'>Top 10 {language} Songs {flag}</h2>
             <ul>
                 {tracks.map((track, index) => (
                     <li key={index} className='text-center hover:text-orange-500 transition-colors duration-300'>
-                        <div onClick={() => fetchLyrics(track.name, track.artists[0].name)}>
-                            {track.name} by {track.artists.map(artist => artist.name).join(', ')}
+                        <div onClick={() => handleSongClick(track.name, track.artists[0].name)}>
+                        {track.name} by {track.artists[0].name}
                         </div>
-                        {lyrics[track.name] && <pre>{lyrics[track.name]}</pre>}
                     </li>
                 ))}
             </ul>
