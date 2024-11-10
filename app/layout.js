@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "./components/navbar";
 import Image from "next/image";
+import ProfileButton from "./components/profile_button";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
             <div className="pt-4">
             <div className="absolute left-4 top-4"><Image className="" src="/logo.png" alt="logo" height={200} width={200}/></div>
             <div className="flex justify-center"><Navbar /></div>
+	    <div className="absolute right-4 top-4"><ProfileButton/></div>
             </div>
           </div>
         <div className="mx-16">

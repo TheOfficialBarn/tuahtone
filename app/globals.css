@@ -41,3 +41,20 @@ h2 {
   font-weight: bold;
   line-height: 2rem;
 }
+
+/* components/ProfileButton.css */
+.profile-button {
+    padding: 5px 20px;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    background-color: #c97388;
+    color: white;
+    border: none;
+    border-radius: 5px; 
+
+}
+
+.profile-button:hover {
+  background-color: #945061 ;
+}
