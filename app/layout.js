@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
                 <Image className="" src="/logo.png" alt="logo" height={200} width={200}/>
               </div>
               <div className="flex justify-center"><Navbar /></div>
-              <div className="absolute right-4 top-4"><ProfileButton/></div>
+              <div className="absolute right-4 top-6"><ProfileButton/></div>
             </div>
           </div>
           <div className="mx-16 pb-8">
