@@ -7,7 +7,6 @@ const clientSecret = '95453bb100d44dfaaa862fffae3f7d83';
 
 export default function SongsBlock({ playlistId, language, flag }) {
     const [tracks, setTracks] = useState([]);
-    const [lyrics, setLyrics] = useState({});
     const router = useRouter();
 
     const handleSongClick = (track, artist) => {
