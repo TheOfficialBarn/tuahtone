@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 
 const clientId = '86f0ed8961d4461597f4ccc7da0ce691';
 const clientSecret = '95453bb100d44dfaaa862fffae3f7d83';
