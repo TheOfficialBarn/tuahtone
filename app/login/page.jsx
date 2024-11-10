@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, collection, addDoc } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
 import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
@@ -55,6 +55,15 @@ export default function Page() {
         uid: user.uid,
         language: language
       });
+
+      // Initialize the 'songs' subcollection (optional: add initial songs)
+      const songsCollectionRef = collection(db, 'users', user.uid, 'songs');
+      
+      // Example: Adding an initial song (optional)
+      // await addDoc(songsCollectionRef, {
+      //   name: 'Sample Song',
+      //   artist: 'Sample Artist'
+      // });
 
       // Redirect to login page after successful sign-up
       router.push('/login');
