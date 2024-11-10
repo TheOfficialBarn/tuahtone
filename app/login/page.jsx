@@ -136,10 +136,6 @@ export default function Page() {
       {user && (
         <>
           <p className='mt-4'>Logged in as: {user.email}</p>
-          <div className="mt-4">
-            {/* Lyrics content */}
-            {lyrics}
-          </div>
         </>
       )}
     </section>
