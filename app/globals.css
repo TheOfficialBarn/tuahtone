@@ -43,12 +43,12 @@ h2 {
 }
 
 /* components/ProfileButton.css */
-.profile-button {
+.buttonStyle {
     padding: 5px 20px;
     font-size: 16px;
     margin: 10px 0;
     cursor: pointer;
-    background-color: #c97388;
+    background-color: #2D3240;
     color: white;
     border: none;
     border-radius: 5px; 

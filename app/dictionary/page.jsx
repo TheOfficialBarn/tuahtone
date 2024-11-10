@@ -3,6 +3,7 @@ import Flashcard from '../components/Flashcard';
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import Link from 'next/link';
+import Flashcard from '../components/flashcard';
 
 export default function Page() {
   const { user } = useAuth();

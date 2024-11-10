@@ -85,42 +85,21 @@ export default function Page() {
     }
   };
 
-  const inputStyle = {
-    marginBottom: '10px',
-    padding: '10px',
-    borderRadius: '5px',
-    width: '100%',
-    maxWidth: '300px'
-  };
-
-  const buttonStyle = {
-    padding: '5px 20px',
-    fontSize: '16px',
-    margin: '10px 0',
-    cursor: 'pointer',
-    backgroundColor: '#2D3240',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-  };
-
   return (
-    <section style={{ fontFamily: 'var(--font-jet-brains-mono)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <h1 style={{ marginBottom: '20px' }}>{isLogin ? 'Login' : 'Sign Up'}</h1>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <section className={`${jetBrainsMono.variable} flex flex-col items-center justify-center`}>
+      <h1 className="mb-5">{isLogin ? 'Login' : 'Sign Up'}</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <input
           type="email"
           placeholder="username"
-          className="bg-songblockbackground rounded-xl p-2 col-span-1"
-          style={inputStyle}
+          className="bg-songblockbackground rounded-md p-2.5 mb-2.5 w-full max-w-[300px]"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="password"
-          className="bg-songblockbackground rounded-xl p-2 col-span-1"
-          style={inputStyle}
+          className="bg-songblockbackground rounded-md p-2.5 mb-2.5 w-full max-w-[300px]"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => {
@@ -134,8 +113,7 @@ export default function Page() {
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className="bg-songblockbackground rounded-xl p-2 col-span-1"
-              style={inputStyle}
+              className="bg-songblockbackground rounded-md p-2.5 mb-2.5 w-full max-w-[300px]"
             >
               <option value="" disabled>Select your language</option>
               <option value="en">English</option>
@@ -146,16 +124,16 @@ export default function Page() {
               <option value="ja">Japanese</option>
               {/* Add more languages as needed */}
             </select>
-            <button type="submit" style={buttonStyle}>Sign Up</button>
+            <button type="submit" className="buttonStyle">Sign Up</button>
           </>
         )}
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button onClick={() => setIsLogin(!isLogin)} style={buttonStyle}>
+      {error && <p className='text-red-600'>{error}</p>}
+      <button onClick={() => setIsLogin(!isLogin)} className="buttonStyle">
         {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
       </button>
-      {isLogin && user && <button onClick={handleLogout} style={buttonStyle}>Logout</button>}
-      {user && <p style={{ marginTop: '20px' }}>Logged in as: {user.email}</p>}
+      {isLogin && user && <button onClick={handleLogout} className='buttonStyle'>Logout</button>}
+      {user && <p className='mt-4'>Logged in as: {user.email}</p>}
     </section>
   );
 }
