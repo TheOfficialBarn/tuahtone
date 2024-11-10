@@ -44,35 +44,32 @@ export default function Page() {
     }
   };
 
-  const handleSignUp = async () => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+const handleSignUp = async () => {
+  if (!language) {
+    setError('Please select a language.');
+    setTimeout(() => setError(''), 5000);
+    return;
+  }
 
-      // Add user information to Firestore
-      await setDoc(doc(db, 'users', user.uid), {
-        email: user.email,
-        uid: user.uid,
-        language: language
-      });
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-      // Initialize the 'songs' subcollection (optional: add initial songs)
-      const songsCollectionRef = collection(db, 'users', user.uid, 'songs');
-      
-      // Example: Adding an initial song (optional)
-      // await addDoc(songsCollectionRef, {
-      //   name: 'Sample Song',
-      //   artist: 'Sample Artist'
-      // });
+    // Add user information to Firestore
+    await setDoc(doc(db, 'users', user.uid), {
+      email: user.email,
+      uid: user.uid,
+      language: language
+    });
 
-      // Redirect to login page after successful sign-up
-      router.push('/login');
-    } catch (error) {
-      console.error("Error signing up:", error);
-      setError(error.message);
-      setTimeout(() => setError(''), 5000);
-    }
-  };
+    // Redirect to login page after successful sign-up
+    router.push('/login');
+  } catch (error) {
+    console.error("Error signing up:", error);
+    setError(error.message);
+    setTimeout(() => setError(''), 5000);
+  }
+}; 
 
   const handleLogout = async () => {
     try {
@@ -145,10 +142,6 @@ export default function Page() {
       {user && (
         <>
           <p className='mt-4'>Logged in as: {user.email}</p>
-          <div className="mt-4">
-            {/* Lyrics content */}
-            {lyrics}
-          </div>
         </>
       )}
     </section>
