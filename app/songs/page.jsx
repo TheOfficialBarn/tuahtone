@@ -5,7 +5,11 @@ export default function Page() {
         <section>
             <h1>Songs</h1>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
-				<SongWidget/>
+				<SongWidget track="Donda" artist="Kanye West"/>
+                <SongWidget track="Goosebumps" artist="Travis Scott"/>
+                <SongWidget track="Bye Me Fui" artist="Bad Bunny"/>
+                <SongWidget track="All Red" artist="Playboi Carti"/>
+                <SongWidget track="Bodak Yellow" artist="Cardi B"/>
             </div>
         </section>
     );
