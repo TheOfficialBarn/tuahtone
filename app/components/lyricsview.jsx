@@ -20,9 +20,10 @@ export default function LyricsView({ track, artist }) {
   return (
     <div className="flex flex-col items-center justify-center">
       <h1>{track} By {artist}</h1>
-      <pre className="bg-songblockbackground rounded-xl px-8 py-4 w-3/4">
+      <pre className="bg-songblockbackground rounded-xl max-h-[65vh] overflow-y-auto px-8 py-4 w-3/4">
         {lyrics}
       </pre>
+      <button className='buttonStyle'>Add to Songs</button>
     </div>
   );
 }

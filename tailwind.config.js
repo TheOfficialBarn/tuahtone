@@ -13,7 +13,8 @@ module.exports = {
         mainbackground: "#1F222C",
         searchbackground: "#2D3240",
         songblockbackground: "#1E1E1E",
-        navbackground: "#3b2c36"
+        navbackground: "#3b2c36",
+        profileButton: "#c97388"
       },
     },
   },
