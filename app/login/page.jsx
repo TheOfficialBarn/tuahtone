@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter from Next.js
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../lib/firebase';
+import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../lib/firebase'; // adjust the path as needed
 import localFont from 'next/font/local';
 
 const jetBrainsMono = localFont({
@@ -15,10 +16,11 @@ const jetBrainsMono = localFont({
 export default function Page() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [language, setLanguage] = useState(''); // Add state for language
   const [error, setError] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [user, setUser] = useState(null);
-  const router = useRouter(); // Initialize the router
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -38,16 +40,28 @@ export default function Page() {
       // Redirect to a different page or show success message
     } catch (error) {
       setError(error.message);
+      setTimeout(() => setError(''), 5000);
     }
   };
 
   const handleSignUp = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Add user information to Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        email: user.email,
+        uid: user.uid,
+        language: language
+      });
+
       // Redirect to login page after successful sign-up
       router.push('/login');
     } catch (error) {
+      console.error("Error signing up:", error);
       setError(error.message);
+      setTimeout(() => setError(''), 5000);
     }
   };
 
@@ -58,6 +72,7 @@ export default function Page() {
       router.push('/login');
     } catch (error) {
       setError(error.message);
+      setTimeout(() => setError(''), 5000);
     }
   };
 
@@ -68,6 +83,14 @@ export default function Page() {
     } else {
       handleSignUp();
     }
+  };
+
+  const inputStyle = {
+    marginBottom: '10px',
+    padding: '10px',
+    borderRadius: '5px',
+    width: '100%',
+    maxWidth: '300px'
   };
 
   const buttonStyle = {
@@ -89,7 +112,7 @@ export default function Page() {
           type="email"
           placeholder="username"
           className="bg-songblockbackground rounded-xl p-2 col-span-1"
-          style={{ marginBottom: '10px' }}
+          style={inputStyle}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -97,6 +120,7 @@ export default function Page() {
           type="password"
           placeholder="password"
           className="bg-songblockbackground rounded-xl p-2 col-span-1"
+          style={inputStyle}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => {
@@ -105,12 +129,32 @@ export default function Page() {
             }
           }}
         />
+        {!isLogin && (
+          <>
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="bg-songblockbackground rounded-xl p-2 col-span-1"
+              style={inputStyle}
+            >
+              <option value="" disabled>Select your language</option>
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+              <option value="fr">French</option>
+              <option value="de">German</option>
+              <option value="zh">Chinese</option>
+              <option value="ja">Japanese</option>
+              {/* Add more languages as needed */}
+            </select>
+            <button type="submit" style={buttonStyle}>Sign Up</button>
+          </>
+        )}
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <button onClick={() => setIsLogin(!isLogin)} style={buttonStyle}>
         {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
       </button>
-      <button onClick={handleLogout} style={buttonStyle}>Logout</button>
+      {isLogin && user && <button onClick={handleLogout} style={buttonStyle}>Logout</button>}
       {user && <p style={{ marginTop: '20px' }}>Logged in as: {user.email}</p>}
     </section>
   );
