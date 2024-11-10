@@ -22,20 +22,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased mx-4 px-4 mt-8 lg:mx-auto
-        bg-fixed h-screen bg-mainbackground`}
-      >
-        <div>
-          <div className="relative flex justify-center items-center">
-            <div className="absolute left-0 top-[0]">
-              <Image className="" src="/logo.png" alt="logo" height={200} width={200}/>
-            </div>
-            <div className="flex justify-center">
-              <Navbar />
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased lg:mx-auto bg-fixed h-screen bg-mainbackground`}>
+          <div className="relative flex justify-center items-center bg-gradient-to-b from-navbackground">
+            <div className="pt-4">
+            <div className="absolute left-4 top-4"><Image className="" src="/logo.png" alt="logo" height={200} width={200}/></div>
+            <div className="flex justify-center"><Navbar /></div>
             </div>
           </div>
-        </div>
         <div className="mx-16">
           {children}
         </div>
