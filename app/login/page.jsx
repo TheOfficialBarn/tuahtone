@@ -1,7 +1,7 @@
 export default function Page(){
 	return(
 		<section>
-			<p>login</p>
+			<h1>Login</h1>
 		</section>
 	);
 }

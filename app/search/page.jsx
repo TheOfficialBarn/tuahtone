@@ -8,7 +8,7 @@ export default function Page(){
 					<SongsBlock language="Spanish" flag="🇲🇽" playlistId="37i9dQZF1EIdXls7Ic0RlM"/>
 					<SongsBlock language="English" flag="🇺🇸" playlistId="37i9dQZF1DX0kbJZpiYdZl"/>
 					<SongsBlock language="French" flag="🇫🇷" playlistId="37i9dQZF1EIdjOVgwfpWk6"/>
-					<p className="bg-songblockbackground rounded-xl p-6 col-span-3">More Languages!</p>
+					<h2 className="bg-songblockbackground rounded-xl p-6 col-span-3 no-underline">More Languages! ➡️</h2>
 				</div>
 
 		</section>
