@@ -133,7 +133,15 @@ export default function Page() {
         {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
       </button>
       {isLogin && user && <button onClick={handleLogout} className='buttonStyle'>Logout</button>}
-      {user && <p className='mt-4'>Logged in as: {user.email}</p>}
+      {user && (
+        <>
+          <p className='mt-4'>Logged in as: {user.email}</p>
+          <div className="mt-4">
+            {/* Lyrics content */}
+            {lyrics}
+          </div>
+        </>
+      )}
     </section>
   );
 }
