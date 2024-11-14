@@ -1,5 +1,4 @@
 "use client";
-import Flashcard from '../components/Flashcard';
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import Flashcard from '../components/flashcard';
