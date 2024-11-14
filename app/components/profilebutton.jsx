@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function ProfileButton() {
   return (
-    <Link href="/login" className="buttonStyle bg-profileButton">
+    <Link href="/login" id='profileButton' className="buttonStyle">
       Profile
     </Link>
   );
