@@ -10,7 +10,7 @@ export default function Page() {
     <section>
       {user ? (
     <>
-      <h1>Welcome to Words, {user.email}</h1>
+      <h1>Welcome to Words</h1>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4 style={{overflow: 'visible' }}">
         <Flashcard/>
         <Flashcard/>
@@ -21,7 +21,7 @@ export default function Page() {
     </>
       ) : (
         <>
-          <h1>Log In to access Words</h1>
+          <h1>Sign in to view Words</h1>
         </>
       )}
     </section>

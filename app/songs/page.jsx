@@ -37,12 +37,12 @@ export default function Page() {
     }
 
     if (!user) {
-        return <p>Please log in to view your songs.</p>;
+        return <h1>Sign in to view Songs</h1>;
     }
 
     return (
         <section>
-            <h1>Songs</h1>
+            <h1>Welcome to Songs</h1>
             {error && <p className="text-red-500">{error}</p>}
             {songs.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">

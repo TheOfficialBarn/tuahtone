@@ -18,7 +18,7 @@ export default function Page() {
   const [password, setPassword] = useState('');
   const [language, setLanguage] = useState(''); // Add state for language
   const [error, setError] = useState('');
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
   const router = useRouter();
 
@@ -119,7 +119,8 @@ const handleSignUp = async () => {
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className="bg-songblockbackground rounded-md p-2.5 mb-2.5 w-full max-w-[300px]"
+              className="appearance-none w-full bg-[#2c2e31] border-2 border-[#646669] text-[#ffcba4] py-2 px-4 pr-8 rounded-md focus:outline-none focus:border-[#ffcba4] hover:border-[#ffcba4] transition-colors"
+              defaultValue=""
             >
               <option value="" disabled>Select your language</option>
               <option value="en">English</option>
