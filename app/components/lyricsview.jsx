@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetchLyrics } from '../api/lyrics/route'; // Import fetchLyrics
 
 export default function LyricsView({ track, artist }) {
   const [lyrics, setLyrics] = useState('');
 
   useEffect(() => {
-    const fetchLyrics = async () => {
+    const retrieveLyrics = async () => {
       try {
-        const response = await axios.get(`https://lyrist.vercel.app/api/${track}/${artist}`);
-        setLyrics(response.data.lyrics);
+        const fetchedLyrics = await fetchLyrics(track, artist);
+        setLyrics(fetchedLyrics); //This is a state updater function used to update tyhe lyrics state variable
       } catch (error) {
         console.error("Error fetching lyrics:", error);
       }
     };
 
-    fetchLyrics();
+    retrieveLyrics();
   }, [track, artist]);
 
   return (
@@ -23,7 +23,9 @@ export default function LyricsView({ track, artist }) {
       <pre className="bg-songblockbackground rounded-xl max-h-[65vh] overflow-y-auto px-8 py-4 w-3/4">
         {lyrics}
       </pre>
-      <button className='buttonStyle'>Add to Songs</button>
+      <button className='buttonStyle'> {/*Handle Here*/}
+        Add to Songs
+      </button>
     </div>
   );
 }
