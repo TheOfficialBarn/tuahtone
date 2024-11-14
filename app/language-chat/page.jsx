@@ -8,7 +8,7 @@ export default function Chat() {
   return (
     <div className="flex flex-col h-full w-full max-w-md mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg">
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto py-4 bg-gray-800 rounded-lg shadow-md mb-4 max-h-96 scrollbar-hide">
+      <div className="flex-1 min-h-96 max-h-96 overflow-y-auto py-4 bg-gray-800 rounded-lg shadow-md mb-4 scrollbar-hide">
         {messages.map(m => (
           <div key={m.id} className="whitespace-pre-wrap mb-2 p-2">
             <strong className={m.role === 'user' ? 'text-blue-400' : 'text-green-400'}>

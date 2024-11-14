@@ -9,9 +9,12 @@ export default function Home(){
             <SongsBlock language="Spanish" flag="🇲🇽" playlistId="37i9dQZEVXbO3qyFxbkOE1"/>
             <SongsBlock language="English" flag="🇺🇸" playlistId="37i9dQZEVXbLRQDuF5jeBp"/>
             <SongsBlock language="French" flag="🇫🇷" playlistId="37i9dQZEVXbIPWwFssbupI"/>
-            <Link href="/morelanguages" className="bg-songblockbackground rounded-xl p-6 col-span-3 no-underline cursor-pointer">
-                More Languages! ➡️
-            </Link>
+            <Link href="/morelanguages" className="bg-songblockbackground rounded-xl p-6 col-span-3 no-underline cursor-pointer">More Languages ➡️</Link>
+            <div className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-xl p-1 col-span-3">
+                <Link href="/language-chat" className="bg-songblockbackground rounded-xl p-6 no-underline cursor-pointer block">
+                    TuahChat ➡️
+                </Link>
+            </div>
         </div>
     </section>
     );
