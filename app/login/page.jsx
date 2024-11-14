@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, collection, addDoc } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
 import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
@@ -44,26 +44,32 @@ export default function Page() {
     }
   };
 
-  const handleSignUp = async () => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+const handleSignUp = async () => {
+  if (!language) {
+    setError('Please select a language.');
+    setTimeout(() => setError(''), 5000);
+    return;
+  }
 
-      // Add user information to Firestore
-      await setDoc(doc(db, 'users', user.uid), {
-        email: user.email,
-        uid: user.uid,
-        language: language
-      });
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-      // Redirect to login page after successful sign-up
-      router.push('/login');
-    } catch (error) {
-      console.error("Error signing up:", error);
-      setError(error.message);
-      setTimeout(() => setError(''), 5000);
-    }
-  };
+    // Add user information to Firestore
+    await setDoc(doc(db, 'users', user.uid), {
+      email: user.email,
+      uid: user.uid,
+      language: language
+    });
+
+    // Redirect to login page after successful sign-up
+    router.push('/login');
+  } catch (error) {
+    console.error("Error signing up:", error);
+    setError(error.message);
+    setTimeout(() => setError(''), 5000);
+  }
+}; 
 
   const handleLogout = async () => {
     try {

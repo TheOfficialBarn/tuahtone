@@ -25,3 +25,5 @@ const auth = getAuth(app);  // Initialize Firebase Authentication and get a refe
 const db = getFirestore(app);
 
 export { app, analytics, auth, db };
+
+
