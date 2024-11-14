@@ -1,14 +1,14 @@
-import { openai } from '@ai-sdk/openai';
 import { generateText } from 'ai';
+import { openai } from '@ai-sdk/openai';
 
-export async function POST() {
-  const prompt = 'Hi give me a random number'
+export async function POST(req) {
+  const { prompt } = await req.json();
 
   const { text } = await generateText({
     model: openai('gpt-4o-mini'),
     system: 'You are a helpful assistant.',
     prompt,
   });
-  console.log(text)
-  return text;
+
+  return Response.json({ text });
 }
