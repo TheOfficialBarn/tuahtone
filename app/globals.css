@@ -49,9 +49,11 @@ h2 {
     color: white;
     border: none;
     border-radius: 5px; 
-
+}
+#profileButton {
+  background-color: #c97388;
 }
 
-.profile-button:hover {
+#profileButton:hover {
   background-color: #945061 ;
 }

@@ -93,7 +93,7 @@ const handleSignUp = async () => {
 
   return (
     <section className={`${jetBrainsMono.variable} flex flex-col items-center justify-center`}>
-      <h1 className="mb-5">{isLogin ? 'Login' : 'Sign Up'}</h1>
+      <h1 className="mb-5">{isLogin ? 'Sign In' : 'Sign Up'}</h1>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <input
           type="email"
@@ -114,6 +114,9 @@ const handleSignUp = async () => {
             }
           }}
         />
+        {isLogin && (
+          <button type="submit" className="buttonStyle">Login</button>
+        )}
         {!isLogin && (
           <>
             <select
@@ -131,7 +134,7 @@ const handleSignUp = async () => {
               <option value="ja">Japanese</option>
               {/* Add more languages as needed */}
             </select>
-            <button type="submit" className="buttonStyle">Sign Up</button>
+            <button type="submit" className="buttonStyle">Create Account</button>
           </>
         )}
       </form>
