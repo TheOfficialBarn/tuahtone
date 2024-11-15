@@ -14,7 +14,7 @@ export default function Flashcard({ word }) {
       try {
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         //Firebase DB: Users > uid, language, email
-        setLanguage(userDoc.data().language); 
+        setLanguage(userDoc.data().language.text); 
       } catch (error) {
         console.error('Error fetching user language:', error);
       }
