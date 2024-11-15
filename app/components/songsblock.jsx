@@ -45,7 +45,7 @@ export default function SongsBlock({ playlistId, language, flag }) {
     }, [playlistId]);
 
     return (
-        <div className="p-16 bg-songblockbackground rounded-xl">
+        <div className="p-16 bg-songblockbackground rounded-xl h-full flex-col">
             <h2 className='flex justify-center'>Top 10 {language} Songs {flag}</h2>
             <ul>
                 {tracks.map((track, index) => (
