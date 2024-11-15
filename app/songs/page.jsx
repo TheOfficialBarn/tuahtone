@@ -13,7 +13,7 @@ export default function Page() {
 
     useEffect(() => {
         if (!loading && user) {
-            const fetchSongs = async () => {
+            async function fetchSongs() {
                 try {
                     const songsCollectionRef = collection(db, 'users', user.uid, 'songs');
                     const songsSnapshot = await getDocs(songsCollectionRef);
@@ -26,7 +26,7 @@ export default function Page() {
                     console.error("Error fetching songs:", err);
                     setError('Failed to load songs.');
                 }
-            };
+            }
 
             fetchSongs();
         }

@@ -12,7 +12,7 @@ export default function LyricsView({ track, artist }) {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const retrieveLyrics = async () => {
+    async function retrieveLyrics() {
       try {
         const fetchedLyrics = await fetchLyrics(track, artist);
         setLyrics(fetchedLyrics); //This is a state updater function used to update tyhe lyrics state variable
