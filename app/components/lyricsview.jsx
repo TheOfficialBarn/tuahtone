@@ -25,34 +25,57 @@ export default function LyricsView({ track, artist }) {
   }, [track, artist]);
 
   async function aiLyricsToFirebase() {
-    setIsLoading(true);
-
-    await fetch('../api/completion', {
-      method: 'POST',
-      body: JSON.stringify({prompt: `Give me a comma separated list of words/unconjugated verbs that a language learner needs to understand this song based on these lyrics: ${lyrics}`,}),
-    }).then(response => {
-      response.json().then(json => {
-        setIsLoading(false);
-        console.log(json.text)
-      });
-    });
-  }
-  
-  const handleAddSong = async () => {
     if (!user) {
-      setMessage('You must be logged in to add songs.');
+      setMessage('You must be logged in to save flashcards.');
       return;
     }
 
+    setIsLoading(true);
+
     try {
-      const songsRef = collection(db, 'users', user.uid, 'songs');
-      await addDoc(songsRef, { name: track, artist });
-      setMessage('Song added successfully!');
-    } catch (err) {
-      console.error("Error adding song:", err);
-      setMessage('Failed to add song.');
+      const response = await fetch('../api/completion', {
+        method: 'POST',
+        body: JSON.stringify({
+          prompt: `Give me ONLY (and nothing else) a comma separated list of words/unconjugated verbs that a language learner needs to understand this song based on these lyrics: ${lyrics}`,
+        }),
+      });
+
+      const json = await response.json();
+      const keywords = json.text.split(',').map(word => word.trim());
+
+      const flashcardsCollection = collection(db, 'users', user.uid, 'flashcards');
+      
+      for (const word of keywords) {
+        await addDoc(flashcardsCollection, { word, timestamp: new Date() });
+      }
+
+      console.log("Keywords saved to Firebase:", keywords);
+    } catch (error) {
+      console.error("Error saving keywords to Firebase:", error);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }
+  
+  async function handleAddSong() {
+    if (!user) {
+      setMessage('You must be logged in to add songs.');
+    } else {
+      try {
+        const songsRef = collection(db, 'users', user.uid, 'songs');
+        await addDoc(songsRef, { name: track, artist });
+        setMessage('Song added successfully!');
+      } catch (err) {
+        console.error("Error adding song:", err);
+        setMessage('Failed to add song.');
+      }
+    }
+  }
+
+  function handleBoth() {
+    aiLyricsToFirebase();
+    handleAddSong();
+  }
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -60,13 +83,9 @@ export default function LyricsView({ track, artist }) {
       <pre className="bg-songblockbackground rounded-xl max-h-[65vh] overflow-y-auto px-8 py-4 w-3/4">
         {lyrics}
       </pre>
-      <button className='buttonStyle' onClick={aiLyricsToFirebase}>
-        Add to Words
-      </button>
-      <p>{isLoading ? "Loading..." : ""}</p>
-
-      <button onClick={handleAddSong} className='buttonStyle'>Add to Songs</button>
+      <button onClick={handleBoth} className='buttonStyle'>Add to Songs</button>
       <p className="text-red-500">{message}</p>
+      <p>{isLoading ? "Loading..." : ""}</p>
     </div>
   );
 }
