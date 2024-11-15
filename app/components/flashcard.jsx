@@ -4,31 +4,16 @@ import { db } from '../lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../context/AuthContext';
 
-export default function Flashcard({ word }) {
+export default function Flashcard({ word}) {
   const { user } = useAuth();
   const [translatedWord, setTranslatedWord] = useState('');
-  const [language, setLanguage] = useState('');
-
-  useEffect(() => {
-    async function fetchUserLanguage() {
-      try {
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        //Firebase DB: Users > uid, language, email
-        setLanguage(userDoc.data().language.text); 
-      } catch (error) {
-        console.error('Error fetching user language:', error);
-      }
-    }
-    fetchUserLanguage();
-  }, [user]);
 
   useEffect(() => {
     const translateWord = async () => {
-      if (!language) return;
       try {
         const response = await fetch('../api/completion', {
           method: 'POST',
-          body: JSON.stringify({ prompt: `Translate ${word} to ${language}`}),
+          body: JSON.stringify({ prompt: `In 3 words maximum ONLY translate ${word} to ${user.language}`}),
         });
         const json = await response.json();
         setTranslatedWord(json.text);
@@ -38,10 +23,8 @@ export default function Flashcard({ word }) {
       }
     };
 
-    if (word && language) {
-      translateWord();
-    }
-  }, [word, language]);
+    translateWord();
+  }, [word]);
 
   return (
     <div className="py-4 px-8 bg-songblockbackground rounded-xl">
@@ -51,7 +34,7 @@ export default function Flashcard({ word }) {
           style={{ transformStyle: 'preserve-3d' }}
         >
           <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden' }}>
-            <h2 className="text-center">{translatedWord || word}</h2>
+            <h2 className="text-center">{word}</h2>
           </div>
           <div
             className="absolute inset-0"
