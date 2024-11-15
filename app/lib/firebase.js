@@ -1,7 +1,6 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";  // Import getAuth from Firebase
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -18,12 +17,18 @@ const firebaseConfig = {
   measurementId: "G-50BXMVMKY0"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);  // Initialize Firebase Authentication and get a reference to the servicea
-const db = getFirestore(app);
+let app;
+if (typeof window !== 'undefined') {
+  if (!getApps().length) {
+    app = initializeApp(firebaseConfig);
+  } else {
+    app = getApp();
+  }
+}
 
-export { app, analytics, auth, db };
+const auth = typeof window !== 'undefined' ? getAuth(app) : null;
+const db = typeof window !== 'undefined' ? getFirestore(app) : null;
+
+export { app, auth, db };
 
 
