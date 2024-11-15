@@ -40,7 +40,7 @@ export default function LyricsView({ track, artist }) {
   
   const handleAddSong = async () => {
     if (!user) {
-      setMessage({ type: 'error', text: 'You must be logged in to add songs.' });
+      setMessage('You must be logged in to add songs.');
       return;
     }
 
@@ -61,7 +61,7 @@ export default function LyricsView({ track, artist }) {
         {lyrics}
       </pre>
       <button className='buttonStyle' onClick={aiLyricsToFirebase}>
-        Add to Songs
+        Add to Words
       </button>
       <p>{isLoading ? "Loading..." : ""}</p>
 
