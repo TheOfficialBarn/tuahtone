@@ -33,7 +33,7 @@ export default function Page() {
     }, [user, loading]);
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <p>loading...</p>;
     }
 
     if (!user) {
@@ -45,7 +45,7 @@ export default function Page() {
             <h1>Welcome to Songs</h1>
             {error && <p className="text-red-500">{error}</p>}
             {songs.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mb-4">
                     {songs.map(song => (
                         <SongWidget key={song.id} track={song.name} artist={song.artist} />
                     ))}

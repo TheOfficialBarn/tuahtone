@@ -31,7 +31,7 @@ export default function Page() {
     }
   }, [user, loading]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>loading...</p>;
 
   if (!user) return <h1>Sign in to view Words</h1>
 
@@ -40,7 +40,7 @@ export default function Page() {
       <h1>Welcome to Words</h1>
       {error && <p className='text-red-500'>{error}</p>}
       {flashcards.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4 style={{overflow: 'visible' }}">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {flashcards.map(card => (
             <Flashcard key={card.id} word={card.word}/>
           ))}

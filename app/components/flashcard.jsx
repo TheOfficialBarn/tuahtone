@@ -1,49 +1,47 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { db } from '../lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Flashcard({ word}) {
-  const { user } = useAuth();
-  const [translatedWord, setTranslatedWord] = useState('');
+	const { user } = useAuth();
+	const [translatedWord, setTranslatedWord] = useState('loading...');
+	const [isFlipped, setIsFlipped] = useState(false); // Add state for flip
 
-  useEffect(() => {
-    const translateWord = async () => {
-      try {
-        const response = await fetch('../api/completion', {
-          method: 'POST',
-          body: JSON.stringify({ prompt: `In 3 words maximum ONLY translate ${word} to ${user.language}`}),
-        });
-        const json = await response.json();
-        setTranslatedWord(json.text);
-      } catch (error) {
-        console.error('Translation error:', error);
-        setTranslatedWord(word);
-      }
-    };
 
-    translateWord();
-  }, [word]);
+	async function translateWord() {
+		try {
+			const response = await fetch('../api/completion', {
+				method: 'POST',
+				body: JSON.stringify({ prompt: `In 3 words maximum ONLY translate (don't surround with quotes): "${word}" to ${user.language}`}),
+			});
+			const json = await response.json();
+			setTranslatedWord(json.text);
+		} catch (error) {
+			console.error('Translation error:', error);
+			setTranslatedWord(word);
+		}
+		};
 
-  return (
-    <div className="py-4 px-8 bg-songblockbackground rounded-xl">
-      <div className="group h-64 w-64" style={{ perspective: '1000px' }}>
-        <div
-          className="relative h-full w-full transition-transform duration-700 group-hover:[transform:rotateY(180deg)]"
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden' }}>
-            <h2 className="text-center">{word}</h2>
-          </div>
-          <div
-            className="absolute inset-0"
-            style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-          >
-            <h2 className="text-center">{translatedWord}</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+	function flipCard(){
+		if(isFlipped === false) {
+			setIsFlipped(true);
+			if(translatedWord === 'loading...') translateWord(); 
+	} else setIsFlipped(false);
+
+  };
+
+	return (
+		<div className="bg-songblockbackground rounded-xl" onClick={flipCard}>
+			<div className="group my-20 [perspective:1000px]">
+				<div className={`relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d] ${isFlipped ? '[transform:rotateY(180deg)]' : ''}`}>
+				<div className=" [backface-visibility:hidden] flex items-center justify-center">
+					<h2 className="text-center no-underline">{word}</h2>
+				</div>
+				<div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] flex items-center justify-center">
+					<h2 className="text-center no-underline">{translatedWord}</h2>
+				</div>
+				</div>
+			</div>
+		</div>
+	);
 }

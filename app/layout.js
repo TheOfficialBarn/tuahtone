@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
   return (
     <AuthProvider>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased lg:mx-auto bg-fixed h-screen bg-mainbackground`}>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased mx-auto bg-fixed h-screen bg-mainbackground`}>
           <div className="relative flex justify-center items-center bg-gradient-to-b from-navbackground">
             <div className="pt-4">
               <div className="absolute left-4 top-4">
@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
               <div className="absolute right-4 top-6"><ProfileButton/></div>
             </div>
           </div>
-          <div className="mx-16 pb-8">
+          <div className="mx-4 md:mx-8 lg:mx-16 pb-8">
             {children}
           </div>
         </body>
