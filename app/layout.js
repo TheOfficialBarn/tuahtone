@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "./components/navbar";
 import { AuthProvider } from "./context/AuthContext";
+import Head from "next/head";
 
 
 const geistSans = localFont({
@@ -24,6 +25,10 @@ export default function RootLayout({ children }) {
   return (
     <AuthProvider>
       <html lang="en">
+      <Head>
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+      </Head>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased mx-auto bg-fixed h-screen bg-mainbackground`}>
           <div className="bg-gradient-to-b from-navbackground">
             <div className="pb-2 pt-4"><Navbar /></div>
