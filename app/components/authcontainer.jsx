@@ -72,23 +72,28 @@ export default function AuthContainer() {
 
   return (
     <section className="flex flex-col items-center justify-center">
-      <h1 className="mb-5">{isLogin ? 'Sign In' : 'Sign Up'}</h1>
       {!user ? (
-        <AuthForm
-          isLogin={isLogin}
-          onSubmit={handleSubmit}
-          error={error}
-          setLanguage={setLanguage}
-        />
+        <>
+          <h1 className="mb-5">{isLogin ? 'Sign In' : 'Sign Up'}</h1>
+          <AuthForm
+            isLogin={isLogin}
+            onSubmit={handleSubmit}
+            error={error}
+            setLanguage={setLanguage}
+          />
+          <button onClick={() => setIsLogin(!isLogin)} className="buttonStyle mt-2">
+            {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
+          </button>
+        </>
+
       ) : (
         <>
-          <p className='mt-4'>Logged in as: {user.email}</p>
+          <h1 className='mt-4'>Hi @{user.email}!</h1>
+          <p className='my-4'>Thank you for using TuahTone!</p>
+          <p><small>Support our development! @theofficialbarn on Venmo</small></p>
           <button onClick={handleLogout} className='buttonStyle'>Logout</button>
         </>
       )}
-      <button onClick={() => setIsLogin(!isLogin)} className="buttonStyle mt-2">
-        {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
-      </button>
     </section>
   );
 }
