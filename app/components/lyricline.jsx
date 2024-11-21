@@ -9,13 +9,19 @@ export default function LyricLine({line}) {
 		api: '/api/stream',
 	});
 	const [isClick, setIsClick] = useState(false);
+	const [isTranslated, setIsTranslated] = useState(false);
 	const { user } = useAuth();
 
 	async function translateLine() {
 		try{
 			if(user){
 				setIsClick(!isClick);
-				if(!isClick) await complete(`Translate the line: "${line}" into the language: "${user.language}." `);
+				if(!isClick){
+					if(!isTranslated){
+						 await complete(`Translate the line: "${line}" into the language: "${user.language}." `);
+						 setIsTranslated(true);
+					}
+				} 
 			}
 		} catch (err) {
 			console.error(err);
