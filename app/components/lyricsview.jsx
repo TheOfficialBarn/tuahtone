@@ -7,22 +7,27 @@ import { db } from '../lib/firebase';
 
 export default function LyricsView({ track, artist }) {
   const { user } = useAuth();
-  const [lyrics, setLyrics] = useState('');
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('');
+  const [lyricsArr, setLyricsArr] = useState([]);
 
   useEffect(() => {
     async function retrieveLyrics() {
       try {
         const fetchedLyrics = await fetchLyrics(track, artist);
-        setLyrics(fetchedLyrics); //This is a state updater function used to update tyhe lyrics state variable
+        if(!fetchedLyrics) {
+          setLyricsArr(["No lyrics found."]);
+        } else {
+          setLyricsArr(fetchedLyrics.split("\n").map(line => line.trim())); // Turn fetchedLyrics into an array
+        }
+
       } catch (error) {
         console.error("Error fetching lyrics:", error);
       }
     };
 
     retrieveLyrics();
-  }, [track, artist]);
+  }, [track, artist]); // Included array as parameter means you want the function to run everytime these variables change
 
   async function aiLyricsToFirebase() {
     if (!user) {
@@ -81,9 +86,18 @@ export default function LyricsView({ track, artist }) {
     <div className="flex flex-col items-center justify-center">
       <h1>{track} By {artist}</h1>
       <pre className="bg-songblockbackground rounded-xl max-h-[65vh] overflow-y-auto px-8 py-4 md:w-5/6 w-11/12">
-        {lyrics}
+        {lyricsArr.length > 0 ? (
+          lyricsArr.map((line, index) => (
+            <p className="hover:text-orange-500 transition-colors duration-300"key={index}>{line}</p>
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
       </pre>
-      <button onClick={handleBoth} className='buttonStyle'>Add to Songs</button>
+      {/* Below is a logical operator thing that if the condition on the left is true the right executes.
+          The opposite of this is ||. In this the right side executes only if the left side is false.
+      */}
+      {(lyricsArr[0] !== "No lyrics found." && lyricsArr.length !== 0) && <button onClick={handleBoth} className='buttonStyle'>Add to Songs</button>}
       <p className="text-red-500">{message}</p>
       <p>{isLoading ? "Loading..." : ""}</p>
     </div>
