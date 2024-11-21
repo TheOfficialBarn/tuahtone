@@ -10,5 +10,5 @@ export async function POST(req) {
     prompt,
   });
 
-  return Response.json({ text }); //Response.json takes in an object as a parameter, thus we use brackets
+  return Response.json({ text });
 }

@@ -3,12 +3,12 @@ import { openai } from '@ai-sdk/openai';
 
 export async function POST(req) {
   const { prompt } = await req.json();
-
-  const { text } = await streamText({
+  console.log(prompt);
+  const result = streamText({
     model: openai('gpt-4o-mini'),
-    system: 'You are a helpful assistant.',
+    system: 'Be straight to the point. Don\'t type anything extra or more than necessary.',
     prompt,
   });
 
-  return Response.toDataStreamResponse(); //Response.json takes in an object as a parameter, thus we use brackets
+  return result.toDataStreamResponse();
 }

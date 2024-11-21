@@ -4,6 +4,7 @@ import { fetchLyrics } from '../api/lyrics/route'; // Import fetchLyrics
 import { useAuth } from '../context/AuthContext';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import LyricLine from './lyricline';
 
 export default function LyricsView({ track, artist }) {
   const { user } = useAuth();
@@ -11,7 +12,7 @@ export default function LyricsView({ track, artist }) {
   const [message, setMessage] = useState('');
   const [lyricsArr, setLyricsArr] = useState([]);
   const [lyrics, setLyrics] = useState("");
-
+  
   useEffect(() => {
     async function retrieveLyrics() {
       try {
@@ -78,32 +79,17 @@ export default function LyricsView({ track, artist }) {
     handleAddSong();
   }
 
-  async function translateLine(index) {
-    const response = await fetch('../api/completion/', {
-      method: 'POST',
-      body: JSON.stringify({
-        prompt: `Give me ONLY (and nothing else) the translation (into ${user.language}) of the following lyric: ${lyricsArr[index]}`,
-      }),
-    });
-    const json = await response.json();
-    const text = json.text;
-    console.log(text);
-    lyricsArr[index]=text;
-    const updatedArr = [...lyricsArr]; //Shallow copy syntatical sugar.
-    setLyricsArr(updatedArr);
-  }
-
   return (
     <div className="flex flex-col items-center justify-center">
       <h1>{track} By {artist}</h1>
       <pre className="bg-songblockbackground rounded-xl max-h-[65vh] overflow-y-auto px-8 py-4 md:w-5/6 w-11/12">
         {lyricsArr.length > 0 ? (
           lyricsArr.map((line, index) => (
-            <p className="hover:text-orange-500 transition-colors duration-300"
+            <LyricLine 
               key={index}
-              onClick={() => translateLine(index)}>
-              {line}
-            </p>
+              line={line}
+            />
+            
           ))
         ) : (
           <p>Loading...</p>
