@@ -10,6 +10,7 @@ export default function LyricsView({ track, artist }) {
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('');
   const [lyricsArr, setLyricsArr] = useState([]);
+  const [lyrics, setLyrics] = useState("");
 
   useEffect(() => {
     async function retrieveLyrics() {
@@ -18,6 +19,7 @@ export default function LyricsView({ track, artist }) {
         if(!fetchedLyrics) {
           setLyricsArr(["No lyrics found."]);
         } else {
+          setLyrics(fetchedLyrics);
           setLyricsArr(fetchedLyrics.split("\n").map(line => line.trim())); // Turn fetchedLyrics into an array
         }
 
@@ -34,9 +36,7 @@ export default function LyricsView({ track, artist }) {
       setMessage('You must be logged in to save flashcards.');
       return;
     }
-
     setIsLoading(true);
-
     try {
       const response = await fetch('../api/completion', {
         method: 'POST',
@@ -44,16 +44,12 @@ export default function LyricsView({ track, artist }) {
           prompt: `Give me ONLY (and nothing else) a comma separated list of words/unconjugated verbs that a language learner needs to understand this song based on these lyrics: ${lyrics}`,
         }),
       });
-
       const json = await response.json();
       const keywords = json.text.split(',').map(word => word.trim());
-
       const flashcardsCollection = collection(db, 'users', user.uid, 'flashcards');
-      
       for (const word of keywords) {
         await addDoc(flashcardsCollection, { word, timestamp: new Date() });
       }
-
       console.log("Keywords saved to Firebase:", keywords);
     } catch (error) {
       console.error("Error saving keywords to Firebase:", error);
@@ -82,13 +78,32 @@ export default function LyricsView({ track, artist }) {
     handleAddSong();
   }
 
+  async function translateLine(index) {
+    const response = await fetch('../api/completion/', {
+      method: 'POST',
+      body: JSON.stringify({
+        prompt: `Give me ONLY (and nothing else) the translation (into ${user.language}) of the following lyric: ${lyricsArr[index]}`,
+      }),
+    });
+    const json = await response.json();
+    const text = json.text;
+    console.log(text);
+    lyricsArr[index]=text;
+    const updatedArr = [...lyricsArr]; //Shallow copy syntatical sugar.
+    setLyricsArr(updatedArr);
+  }
+
   return (
     <div className="flex flex-col items-center justify-center">
       <h1>{track} By {artist}</h1>
       <pre className="bg-songblockbackground rounded-xl max-h-[65vh] overflow-y-auto px-8 py-4 md:w-5/6 w-11/12">
         {lyricsArr.length > 0 ? (
           lyricsArr.map((line, index) => (
-            <p className="hover:text-orange-500 transition-colors duration-300"key={index}>{line}</p>
+            <p className="hover:text-orange-500 transition-colors duration-300"
+              key={index}
+              onClick={() => translateLine(index)}>
+              {line}
+            </p>
           ))
         ) : (
           <p>Loading...</p>
