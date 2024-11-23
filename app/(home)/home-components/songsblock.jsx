@@ -12,7 +12,7 @@ export default function SongsBlock({ playlistId, language, flag }) {
 	function handleSongClick(track, artist) {
 		const query = `track=${encodeURIComponent(track)}&artist=${encodeURIComponent(artist)}`;
 		router.push(`/lyricsview?${query}`);
-	  };
+	};
 
 	useEffect(() => {
 		async function getAccessToken() {
