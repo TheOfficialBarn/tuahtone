@@ -1,6 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import LyricsView from "@/app/components/lyricsview";
+import LyricsView from "./lyricsview-components/lyricsview";
 
 export default function Page() {
     const searchParams = useSearchParams();

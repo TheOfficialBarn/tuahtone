@@ -1,4 +1,4 @@
-import SongsBlock from "@/app/components/songsblock";
+import SongsBlock from "@/app/(home)/home-components/songsblock";
 export default function Page(){
     return(
         <section>

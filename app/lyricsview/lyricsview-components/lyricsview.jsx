@@ -1,9 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { fetchLyrics } from '../api/lyrics/route'; // Import fetchLyrics
-import { useAuth } from '../context/AuthContext';
+import { fetchLyrics } from '@/app/api/lyrics/route';
+import { useAuth } from '@/app/context/AuthContext';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { db } from '@/app/lib/firebase';
 import LyricLine from './lyricline';
 
 export default function LyricsView({ track, artist }) {

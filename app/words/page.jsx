@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import Flashcard from '../components/flashcard';
+import Flashcard from './words-components/flashcard';
 
 export default function Page() {
   const { user, loading } = useAuth();

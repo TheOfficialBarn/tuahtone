@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../lib/firebase';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import SongWidget from "../components/songwidget";
+import SongWidget from "./songs-components/songwidget";
 
 export default function Page() {
     const { user, loading } = useAuth();

@@ -1,7 +1,7 @@
 "use client";
 
 import localFont from 'next/font/local';
-import AuthContainer from '../components/authcontainer';
+import AuthContainer from './login-components/authcontainer';
 
 // Font setup
 const jetBrainsMono = localFont({
