@@ -32,33 +32,6 @@ export default function LyricsView({ track, artist }) {
     retrieveLyrics();
   }, [track, artist]); // Included array as parameter means you want the function to run everytime these variables change
 
-  async function aiLyricsToFirebase() {
-    if (!user) {
-      setMessage('You must be logged in to save flashcards.');
-      return;
-    }
-    setIsLoading(true);
-    try {
-      const response = await fetch('../api/completion', {
-        method: 'POST',
-        body: JSON.stringify({
-          prompt: `Give me ONLY (and nothing else) a comma separated list of words/unconjugated verbs that a language learner needs to understand this song based on these lyrics: ${lyrics}`,
-        }),
-      });
-      const json = await response.json();
-      const keywords = json.text.split(',').map(word => word.trim());
-      const flashcardsCollection = collection(db, 'users', user.uid, 'flashcards');
-      for (const word of keywords) {
-        await addDoc(flashcardsCollection, { word, timestamp: new Date() });
-      }
-      console.log("Keywords saved to Firebase:", keywords);
-    } catch (error) {
-      console.error("Error saving keywords to Firebase:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-  
   async function handleAddSong() {
     if (!user) {
       setMessage('You must be logged in to add songs.');
@@ -74,9 +47,44 @@ export default function LyricsView({ track, artist }) {
     }
   }
 
+  async function aiLyricsToFirebase() {
+    if (!user) {
+      setMessage('You must be logged in to save flashcards.');
+      return;
+    }
+    setIsLoading(true);
+    try {
+      setTimeout(() => {
+        setMessage("Adding lyrics...")
+      }, 1000);
+      const response = await fetch('../api/completion', {
+        method: 'POST',
+        body: JSON.stringify({
+          prompt: `Give me ONLY (and nothing else) a comma separated list of words/unconjugated verbs that a language learner needs to understand this song based on these lyrics: ${lyrics}`,
+        }),
+      });
+      const json = await response.json();
+      const keywords = json.text.split(',').map(word => word.trim());
+      const flashcardsCollection = collection(db, 'users', user.uid, 'flashcards');
+      for (const word of keywords) {
+        await addDoc(flashcardsCollection, { word, timestamp: new Date() });
+      }
+      setTimeout(() => {
+        setMessage("Lyrics added to Words")
+      }, 3000);
+    } catch (error) {
+      console.error("Error saving keywords to Firebase:", error);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 4000);
+    }
+  }
+
   function handleBoth() {
-    aiLyricsToFirebase();
+    setIsLoading(true);
     handleAddSong();
+    aiLyricsToFirebase();
   }
 
   return (
@@ -99,8 +107,7 @@ export default function LyricsView({ track, artist }) {
           The opposite of this is ||. In this the right side executes only if the left side is false.
       */}
       {(lyricsArr[0] !== "No lyrics found." && lyricsArr.length !== 0) && <button onClick={handleBoth} className='buttonStyle'>Add to Songs</button>}
-      <p className="text-red-500">{message}</p>
-      <p>{isLoading ? "Loading..." : ""}</p>
+      <p>{isLoading ? message : ""}</p>
     </div>
   );
 }

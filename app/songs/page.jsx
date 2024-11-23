@@ -53,7 +53,7 @@ export default function Page() {
 
     return (
         <section>
-            <h1>Welcome to Songs</h1>
+            <h1>Songs</h1>
             {error && <p className="text-red-500">{error}</p>}
             {songs.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mb-4">

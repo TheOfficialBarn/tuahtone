@@ -37,7 +37,7 @@ export default function Page() {
 
   return (
     <section>
-      <h1>Welcome to Words</h1>
+      <h1>Words</h1>
       {error && <p className='text-red-500'>{error}</p>}
       {flashcards.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
