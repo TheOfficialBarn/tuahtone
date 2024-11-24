@@ -64,7 +64,7 @@ export default function Search() {
   }
 
 	return (
-		<div className="w-full">
+		<div className="w-full border-b border-gray-700">
 			<input
 				type="text"
 				placeholder="Search for your favorite song..."

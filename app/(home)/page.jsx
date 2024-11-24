@@ -6,7 +6,8 @@ export default function Home(){
     return(
     <section>
         <h1>Home</h1>
-            <Search/>
+        <Search/>
+        <h3>Featured Songs</h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 my-4">
             <SongsBlock language="Spanish" flag="🇲🇽" playlistId="37i9dQZEVXbO3qyFxbkOE1"/>
             <SongsBlock language="English" flag="🇺🇸" playlistId="37i9dQZEVXbLRQDuF5jeBp"/>

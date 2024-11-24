@@ -59,7 +59,7 @@ export default function Page() {
       <h1>Words</h1>
       <BigFlashCard wordsObjArray={flashcards} />
 
-      <Link href="words/wordslibrary" className="bg-songblockbackground rounded-xl p-6 cursor-pointer block my-4">
+      <Link href="words/wordslibrary" className="bg-songblockbackground rounded-xl p-6 cursor-pointer block my-4 hover:bg-zinc-900 transition-colors duration-500">
         Words Library ➡️
       </Link>
 
