@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { db } from '../lib/firebase';
+import { useAuth } from '@/app/context/AuthContext';
+import { db } from '@/app/lib/firebase';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import SongWidget from "./songs-components/songwidget";
 

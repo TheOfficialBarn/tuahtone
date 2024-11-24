@@ -19,10 +19,10 @@ export default function Home(){
                     className="h-full"
                 />
             </div>
-            <Link href="/morelanguages" className="bg-songblockbackground rounded-xl p-6 col-span-full no-underline cursor-pointer">More Languages ➡️</Link>
+            <Link href="/morelanguages" className="bg-songblockbackground rounded-xl p-6 col-span-full">More Languages ➡️</Link>
             {/* TuahChat */}
             <div className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-xl p-1 col-span-full">
-                <Link href="/tuahchat" className="bg-songblockbackground rounded-lg p-6 no-underline cursor-pointer block">
+                <Link href="/tuahchat" className="bg-songblockbackground rounded-lg p-6 block">
                     TuahChat ➡️
                 </Link>
             </div>

@@ -1,53 +1,52 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { db } from '../lib/firebase';
+import { useAuth } from '@/app/context/AuthContext';
+import { db } from '@/app/lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import Flashcard from './words-components/flashcard';
+import Link from 'next/link';
+import BigFlashCard from './words-components/bigflashcard';
+import SongWords from './words-components/songwords';
 
 export default function Page() {
-  const { user, loading } = useAuth();
-  const [flashcards, setCard] = useState([]);
-  const [error, setError] = useState('')
+	const { user, loading } = useAuth();
+	const [flashcards, setCard] = useState([]);
+	const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (!loading && user) {
-      async function fetchCards() {
-        try{
-          const cardsCollectionRef = collection(db, 'users', user.uid, 'flashcards');
-          const cardsSnapshot = await getDocs(cardsCollectionRef);
-          const cardsList = cardsSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }));
-          setCard(cardsList);
-        } catch (err) {
-          console.error("Error fetching flashcards", err);
-          setError("Failed to load flashcards");
-        }
-      }
-      fetchCards(); 
-    }
-  }, [user, loading]);
+	useEffect(() => {
+	if (!loading && user) {
+		async function fetchCards() {
+		try {
+			const cardsCollectionRef = collection(db, 'users', user.uid, 'flashcards');
+			const cardsSnapshot = await getDocs(cardsCollectionRef);
+			const cardsList = cardsSnapshot.docs.map(doc => ({
+				id: doc.id,
+				...doc.data()
+			}));
+			setCard(cardsList);
+		} catch (err) {
+			setError(err.message);
+			console.error("Error fetching flashcards", err);
+		}
+		}
+		fetchCards();
+	}
+	}, [user, loading]);
 
-  if (loading) return <p>loading...</p>;
+	if (loading) return <p>loading...</p>;
+	if (error) return <p>Error: {error}</p>;
+	if (!user) return <h1>Sign in to view Words</h1>;
 
-  if (!user) return <h1>Sign in to view Words</h1>
+	return (
+		<section>
+			<h1>Words</h1>
+			<BigFlashCard wordsObjArray={flashcards} />
 
-  return (
-    <section>
-      <h1>Words</h1>
-      {error && <p className='text-red-500'>{error}</p>}
-      {flashcards.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {flashcards.map(card => (
-            <Flashcard key={card.id} word={card.word}/>
-          ))}
-        </div>
-      ) : (
-        <p>No words added yet.</p>
-      )}
-    </section>
-  );
+			<Link href="words/wordslibrary" className="bg-songblockbackground rounded-xl p-6 cursor-pointer block my-4">
+			Words Library ➡️
+			</Link>
+
+			<SongWords/>
+		</section>
+	);
 }

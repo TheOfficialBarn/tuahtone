@@ -32,31 +32,26 @@ export default function LyricsView({ track, artist }) {
     retrieveLyrics();
   }, [track, artist]); // Included array as parameter means you want the function to run everytime these variables change
 
-  async function handleAddSong() {
+  async function addToLibrary() {
     if (!user) {
-      setMessage('You must be logged in to add songs.');
-    } else {
-      try {
-        const songsRef = collection(db, 'users', user.uid, 'songs');
-        await addDoc(songsRef, { name: track, artist });
-        setMessage('Song added successfully!');
-      } catch (err) {
-        console.error("Error adding song:", err);
-        setMessage('Failed to add song.');
-      }
-    }
-  }
-
-  async function aiLyricsToFirebase() {
-    if (!user) {
-      setMessage('You must be logged in to save flashcards.');
+      setMessage('You must be logged in to save song and flashcards.');
       return;
     }
     setIsLoading(true);
     try {
+      // First add the song and get its reference
+      const songsRef = collection(db, 'users', user.uid, 'songs');
+      const songDoc = await addDoc(songsRef, { 
+        name: track, 
+        artist,
+        timestamp: new Date()
+      });
+
       setTimeout(() => {
         setMessage("Adding lyrics...")
       }, 1000);
+
+      // Get keywords from OpenAI
       const response = await fetch('../api/completion', {
         method: 'POST',
         body: JSON.stringify({
@@ -65,26 +60,24 @@ export default function LyricsView({ track, artist }) {
       });
       const json = await response.json();
       const keywords = json.text.split(',').map(word => word.trim());
-      const flashcardsCollection = collection(db, 'users', user.uid, 'flashcards');
+
+      // Add flashcards as subcollection of the song
+      const flashcardsCollection = collection(db, 'users', user.uid, 'songs', songDoc.id, 'flashcards');
       for (const word of keywords) {
         await addDoc(flashcardsCollection, { word, timestamp: new Date() });
       }
+
       setTimeout(() => {
-        setMessage("Lyrics added to Words")
+        setMessage("Song and words added successfully!")
       }, 3000);
     } catch (error) {
-      console.error("Error saving keywords to Firebase:", error);
+      console.error("Error saving song and keywords:", error);
+      setMessage('Failed to add song and words.');
     } finally {
       setTimeout(() => {
         setIsLoading(false);
       }, 4000);
     }
-  }
-
-  function handleBoth() {
-    setIsLoading(true);
-    handleAddSong();
-    aiLyricsToFirebase();
   }
 
   return (
@@ -106,7 +99,7 @@ export default function LyricsView({ track, artist }) {
       {/* Below is a logical operator thing that if the condition on the left is true the right executes.
           The opposite of this is ||. In this the right side executes only if the left side is false.
       */}
-      {(lyricsArr[0] !== "No lyrics found." && lyricsArr.length !== 0) && <button onClick={handleBoth} className='buttonStyle'>Add to Songs</button>}
+      {(lyricsArr[0] !== "No lyrics found." && lyricsArr.length !== 0) && <button onClick={addToLibrary} className='buttonStyle'>Add to Songs</button>}
       <p>{isLoading ? message : ""}</p>
     </div>
   );
