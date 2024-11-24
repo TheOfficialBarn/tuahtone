@@ -34,12 +34,22 @@ export default function Page() {
 
     const deleteSong = async (id) => {
         try {
+            // First delete all flashcards in the subcollection
+            const flashcardsRef = collection(db, 'users', user.uid, 'songs', id, 'flashcards');
+            const flashcardsSnapshot = await getDocs(flashcardsRef);
+            
+            const deleteFlashcards = flashcardsSnapshot.docs.map(doc => 
+                deleteDoc(doc.ref)
+            );
+            await Promise.all(deleteFlashcards);
+
+            // Then delete the song document
             const songDoc = doc(db, 'users', user.uid, 'songs', id);
             await deleteDoc(songDoc);
             setSongs(songs.filter(song => song.id !== id));
         } catch (err) {
             console.error("Error deleting song:", err);
-            setError('Failed to delete song.');
+            setError('Failed to delete song and flashcards.');
         }
     };
 

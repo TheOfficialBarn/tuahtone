@@ -21,7 +21,7 @@ export default function AuthContainer() {
     return () => unsubscribe();
   }, []);
 
-  const handleLogin = async (email, password) => {
+  async function handleLogin(email, password) {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
@@ -30,7 +30,7 @@ export default function AuthContainer() {
     }
   };
 
-  const handleSignUp = async (email, password) => {
+  async function handleSignUp(email, password) {
     if (!language) {
       setError('Please select a language.');
       setTimeout(() => setError(''), 5000);
@@ -51,7 +51,7 @@ export default function AuthContainer() {
     }
   };
 
-  const handleLogout = async () => {
+  async function handleLogout() {
     try {
       await signOut(auth);
       router.push('/login');
@@ -61,7 +61,7 @@ export default function AuthContainer() {
     }
   };
 
-  const handleSubmit = (e, email, password) => {
+  function handleSubmit(e, email, password) {
     e.preventDefault();
     if (isLogin) {
       handleLogin(email, password);

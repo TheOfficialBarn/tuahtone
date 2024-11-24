@@ -28,7 +28,7 @@ export default function LyricLine({line}) {
 		}
 	}
 	return(
-		<p className="hover:text-orange-500 transition-colors duration-300"
+		<p className="hover:text-orange-500 transition-colors duration-300 cursor-pointer"
 		onClick={translateLine}>{isClick ? (completion) : (line)}</p>
 	);
 }

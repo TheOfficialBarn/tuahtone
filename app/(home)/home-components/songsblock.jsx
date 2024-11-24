@@ -50,7 +50,7 @@ export default function SongsBlock({ playlistId, language, flag }) {
 			<h2 className='flex justify-center'>Top 10 {language} Songs {flag}</h2>
 			<ul>
 				{tracks.map((track, index) => (
-					<li key={index} className='text-center hover:text-orange-500 transition-colors duration-300'>
+					<li key={index} className='text-center hover:text-orange-500 transition-colors duration-300 cursor-pointer'>
 						<div onClick={() => handleSongClick(track.name, track.artists[0].name)}>
 						{track.name} by {track.artists[0].name}
 						</div>
