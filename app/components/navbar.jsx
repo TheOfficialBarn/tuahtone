@@ -1,6 +1,5 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState } from 'react';
 
 const navItems = [
@@ -13,17 +12,17 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <>
-    <aside className="mb-16 tracking-tight w-full flex justify-center">
+    <aside className="mb-16 tracking-tight w-full flex justify-between items-center px-4">
       {/* TuahTone Logo */}
-      <div className="absolute left-4 top-[13px]">
-        <Image className="" src="/logo.png" alt="logo" height={200} width={200}/>
+      <div id="logo">
+        TUAH TONE
       </div>
       {/* Navigation Bar */}
       <nav
         className="flex flex-row flex-wrap items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 max-md:hidden md:relative"
         id="nav"
       >
-        <div className="flex flex-row flex-wrap space-x-0 bg-searchbackground rounded-xl px-8">
+        <div className="flex flex-row flex-wrap space-x-0 rounded-xl px-8">
           {navItems.map(({ path, name }) => (
             <Link
               key={path}
@@ -36,7 +35,7 @@ export function Navbar() {
         </div>
       </nav>
       {/* Profile Button */}
-      <div className="absolute right-4 top-6 max-md:hidden">
+      <div className="max-md:hidden">
         <Link href="/login" id='profileButton' className="buttonStyle">
             Profile
         </Link>

@@ -46,11 +46,11 @@ export default function SongsBlock({ playlistId, language, flag }) {
 	}, [playlistId]);
 
 	return (
-		<div className="p-16 bg-songblockbackground rounded-xl h-full flex-col">
+		<div className="p-16 bg-blue rounded-xl h-full flex-col">
 			<h2 className='flex justify-center'>{language} {flag}</h2>
 			<ul>
 				{tracks.map((track, index) => (
-					<li key={index} className='text-center hover:text-orange-500 transition-colors duration-300 cursor-pointer'>
+					<li key={index} className='text-center hover:text-gold transition-colors duration-300 cursor-pointer'>
 						<div onClick={() => handleSongClick(track.name, track.artists[0].name)}>
 						{track.name} by {track.artists[0].name}
 						</div>

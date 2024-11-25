@@ -33,11 +33,11 @@ export default function LyricsView({ track, artist }) {
   }, [track, artist]); // Included array as parameter means you want the function to run everytime these variables change
 
   async function addToLibrary() {
+    setIsLoading(true);
     if (!user) {
-      setMessage('You must be logged in to save song and flashcards.');
+      alert("You must be logged in to save this song.")
       return;
     }
-    setIsLoading(true);
     try {
       // First add the song and get its reference
       const songsRef = collection(db, 'users', user.uid, 'songs');
@@ -83,7 +83,7 @@ export default function LyricsView({ track, artist }) {
   return (
     <div className="flex flex-col items-center justify-center">
       <h1>{track} By {artist}</h1>
-      <pre className="bg-songblockbackground rounded-xl max-h-[65vh] overflow-y-auto px-8 py-4 md:w-5/6 w-11/12">
+      <pre className="bg-blue rounded-xl max-h-[65vh] overflow-y-auto px-8 py-4 md:w-5/6 w-11/12">
         {lyricsArr.length > 0 ? (
           lyricsArr.map((line, index) => (
             <LyricLine 

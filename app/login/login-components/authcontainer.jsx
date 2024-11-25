@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { auth, db } from '@/app/lib/firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
@@ -13,6 +13,7 @@ export default function AuthContainer() {
   const [isLogin, setIsLogin] = useState(true);
   const [user, setUser] = useState(null);
   const router = useRouter();
+  const formRef = useRef(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -70,28 +71,42 @@ export default function AuthContainer() {
     }
   };
 
+  const triggerFormSubmit = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  };
+
   return (
     <section className="flex flex-col items-center justify-center">
       {!user ? (
         <>
           <h1 className="mb-5">{isLogin ? 'Sign In' : 'Sign Up'}</h1>
           <AuthForm
+            ref={formRef}
             isLogin={isLogin}
             onSubmit={handleSubmit}
             error={error}
             setLanguage={setLanguage}
           />
-          <button onClick={() => setIsLogin(!isLogin)} className="buttonStyle mt-2">
-            {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
-          </button>
+          <div className="flex gap-2 mt-2">
+            <button onClick={() => setIsLogin(!isLogin)} className="buttonStyle w-[145px] secondaryButton">
+              {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
+            </button>
+            <button 
+              type="button" 
+              onClick={triggerFormSubmit}
+              className="buttonStyle w-[145px]"
+            >
+              {isLogin ? 'Login' : 'Create Account'}
+            </button>
+          </div>
         </>
-
       ) : (
         <>
-          <h1 className='mt-4'>Hi @{user.email}!</h1>
-          <p className='my-4'>Thank you for using TuahTone!</p>
-          <p><small>Support our development! @theofficialbarn on Venmo</small></p>
-          <button onClick={handleLogout} className='buttonStyle'>Logout</button>
+          <h1 className='mt-4'>Hi {user.email}!</h1>
+          <p className='mb-4'>Thank you for using TuahTone!</p>
+          <button onClick={handleLogout} className='buttonStyle secondaryButton'>Logout</button>
         </>
       )}
     </section>

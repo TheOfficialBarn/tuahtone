@@ -9,7 +9,6 @@ import SongWordsWidget from './songwords-widget';
 export default function SongWords({ updateFlashcards }) {
     const { user, loading } = useAuth();
     const [songs, setSongs] = useState([]);
-    const [error, setError] = useState('');
 
     useEffect(() => {
         if (!loading && user) {
@@ -38,7 +37,6 @@ export default function SongWords({ updateFlashcards }) {
                     setSongs(songsWithWords);
                 } catch (err) {
                     console.error("Error fetching songs:", err);
-                    setError('Failed to load songs.');
                 }
             }
 

@@ -10,11 +10,15 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        mainbackground: "#1F222C",
-        searchbackground: "#2D3240",
-        songblockbackground: "#1E1E1E",
-        navbackground: "#3b2c36",
-        profileButton: "#c97388"
+        night: "#0A0A0A",
+        darkBlue: "#001B29",
+        blue: "#002132",
+        lightBlue: "#044362",
+        profileButton: "#c97388",
+        gold: "#BBA839",
+        darkGold: "#5E541D",
+        darkRed: "#4B2C34",
+        sand: "#e7ccb1"
       },
     },
   },

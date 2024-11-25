@@ -64,11 +64,11 @@ export default function Search() {
   }
 
 	return (
-		<div className="w-full border-b border-gray-700">
+		<div className="w-full border-b border-slate-700">
 			<input
 				type="text"
 				placeholder="Search for your favorite song..."
-				className="p-4 rounded-xl bg-zinc-700 w-full caret-rose-400 focus:outline-none focus:ring-2 focus:ring-profileButton"
+				className="p-4 rounded-xl bg-slate-800 w-full caret-gold focus:outline-none focus:ring-2 focus:ring-gold"
 				value={query}
 				onChange={handleSearch}
 			/>
@@ -76,7 +76,7 @@ export default function Search() {
 				{results.map((track) => (
 					<li 
 						key={track.id} 
-						className="flex items-center text-white p-2 border-b border-gray-700 hover:bg-black hover:bg-opacity-10"
+						className="flex items-center text-white p-2 border-b border-slate-700 hover:bg-slate-700 hover:bg-opacity-20 transition-colors duration-300"
 						onClick={() => handleSongClick(track.name, track.artists[0].name)}
 					>
 						<img

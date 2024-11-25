@@ -57,7 +57,7 @@ export default function Page() {
             <Flashcard
               key={card.id}
               word={card.word}
-              className="bg-songblockbackground rounded-xl"
+              className="bg-blue hover:bg-darkBlue transition-colors duration-300 rounded-xl cursor-pointer"
             />
           ))}
         </div>

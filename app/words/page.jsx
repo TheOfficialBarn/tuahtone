@@ -49,21 +49,27 @@ export default function Page() {
       fetchAllFlashcards();
     }
   }, [user, loading]);
+  
+  if(loading) return <p>loading...</p>;
+  if(!user) return <h1>Sign in to view Words</h1>;
 
-  if (loading) return <p>loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!user) return <h1>Sign in to view Words</h1>;
 
   return (
-    <section>
-      <h1>Words</h1>
-      <BigFlashCard wordsObjArray={flashcards} />
+	<section>
+		<h1>Words</h1>
+		{loading && <p>loading...</p>}
+		{error && <p>Error: {error}</p>}
+		{flashcards.length == 0 && <p>No songs added yet.</p>}
+		{(!error && flashcards.length > 0) &&
+			<>
+				<BigFlashCard wordsObjArray={flashcards} />
+				<Link href="words/wordslibrary" className="bg-blue rounded-xl p-6 cursor-pointer block my-4 hover:bg-darkBlue transition-colors duration-300">
+				Words Library ➡️
+				</Link>
 
-      <Link href="words/wordslibrary" className="bg-songblockbackground rounded-xl p-6 cursor-pointer block my-4 hover:bg-zinc-900 transition-colors duration-500">
-        Words Library ➡️
-      </Link>
-
-      <SongWords updateFlashcards={updateFlashcards}/> {/* Pass the function */}
+				<SongWords updateFlashcards={updateFlashcards}/> {/* Pass the function */}
+			</>
+		}
     </section>
   );
 }

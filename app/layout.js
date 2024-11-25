@@ -23,9 +23,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased mx-auto bg-fixed h-screen bg-mainbackground`}>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased mx-auto bg-fixed h-screen bg-night`}>
           <AuthProvider>
-            <div className="md:bg-gradient-to-b from-navbackground">
+            <div className="md:bg-gradient-to-b from-lightBlue">
               <div className="pb-2 pt-4"><Navbar /></div>
             </div>
             <div className="mx-4 md:mx-8 lg:mx-16 pb-8">

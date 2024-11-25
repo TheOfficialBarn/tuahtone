@@ -18,7 +18,7 @@ export default function SongWidget({ id, track, artist, deleteSong }) {
 
     return (
         <div
-            className="p-4 bg-songblockbackground hover:bg-zinc-900 transition-colors duration-500 cursor-pointer rounded-xl flex items-center space-x-4"
+            className="p-4 bg-blue hover:bg-darkBlue transition-colors duration-300 cursor-pointer rounded-xl flex items-center space-x-4"
             onClick={() => handleSongClick(track, artist)}
         >
             <Image src="/music.png" alt="Music Icon" width={100} height={100} />
@@ -27,7 +27,7 @@ export default function SongWidget({ id, track, artist, deleteSong }) {
                 <p className="text-gray-600">{artist}</p>
             </div>
             <button
-                className="text-pink-500 p-2 rounded bg-navbackground"
+                className="text-darkRed p-2 rounded-full bg-darkBlue"
                 onClick={handleDeleteClick}
             >
                 X
