@@ -33,7 +33,7 @@ export default function Chat() {
           />
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-lightBlue transition-colors duration-300 text-white font-semibold rounded-md hover:bg-darkBlue"
+            className="w-full py-2 px-4 bg-violet-600 transition-colors duration-300 text-white font-semibold rounded-md hover:bg-violet-700"
           >
             Send
           </button>
