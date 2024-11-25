@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchLyrics } from '@/app/api/lyrics/route';
 import { useAuth } from '@/app/context/AuthContext';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/app/lib/firebase';
 import LyricLine from './lyricline';
 
@@ -35,24 +35,31 @@ export default function LyricsView({ track, artist, imageURL }) {
   async function addToLibrary() {
     setIsLoading(true);
     if (!user) {
-      alert("You must be logged in to save this song.")
+      alert("You must be logged in to save this song.");
       return;
     }
+    
     try {
-      // First add the song and get its reference
       const songsRef = collection(db, 'users', user.uid, 'songs');
+      const q = query(songsRef, where('name', '==', track), where('artist', '==', artist));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        alert("Song already added");
+        return;
+      }
+
       const songDoc = await addDoc(songsRef, { 
         name: track, 
-        artist, //Shorthand for artist: artist
-        imageURL, //Using the shorthand again below
+        artist,
+        imageURL,
         timestamp: new Date()
       });
 
       setTimeout(() => {
-        setMessage("Adding lyrics...")
+        setMessage("Adding lyrics...");
       }, 1000);
 
-      // Get keywords from OpenAI
       const response = await fetch('../api/completion', {
         method: 'POST',
         body: JSON.stringify({

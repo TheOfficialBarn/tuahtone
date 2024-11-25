@@ -13,7 +13,7 @@ export default function Search() {
 	const router = useRouter();
 
 	function handleSongClick(track, artist, imageURL) {
-		const query = `track=${encodeURIComponent(track)}&artist=${encodeURIComponent(artist)}&image=${encodeURIComponent(imageURL)}}`;
+		const query = `track=${encodeURIComponent(track)}&artist=${encodeURIComponent(artist)}&image=${encodeURIComponent(imageURL)}`;
 		router.push(`/lyricsview?${query}`);
 	};
 
