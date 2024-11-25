@@ -6,11 +6,11 @@ export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   
   return (
-    <section className='h-screen'>
+    <section>
       <h1 className="bg-gradient-to-br from-purple-300 to-pink-500 text-transparent bg-clip-text">TuahChat</h1>
       <small className='block mb-2 text-center'>Powered by Tone Intelligence</small>
       {/* Background */}
-      <div className="flex flex-col h-2/3 w-full max-w-md mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg">
+      <div className="flex flex-col h-[66vh] w-full max-w-md mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg">
         {/* Messages Container */}
         <div className="flex-1 overflow-y-auto py-4 bg-gray-800 rounded-lg shadow-md mb-4 scrollbar-hide">
           {messages.map(m => (
