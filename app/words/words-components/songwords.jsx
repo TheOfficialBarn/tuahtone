@@ -53,6 +53,7 @@ export default function SongWords({ updateFlashcards }) {
                             key={song.id}
                             track={song.name}
                             artist={song.artist}
+                            imageURL={song.imageURL}
                             onClick={() => updateFlashcards(song.flashcards)}
                         />
                     ))}

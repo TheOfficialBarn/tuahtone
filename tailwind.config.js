@@ -16,9 +16,7 @@ module.exports = {
         lightBlue: "#044362",
         profileButton: "#c97388",
         gold: "#BBA839",
-        darkGold: "#5E541D",
-        darkRed: "#4B2C34",
-        sand: "#e7ccb1"
+        darkGold: "#5E541D"
       },
     },
   },

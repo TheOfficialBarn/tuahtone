@@ -6,16 +6,16 @@ export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   
   return (
-    <>
+    <section className='h-screen'>
       <h1 className="bg-gradient-to-br from-purple-300 to-pink-500 text-transparent bg-clip-text">TuahChat</h1>
       <small className='block mb-2 text-center'>Powered by Tone Intelligence</small>
       {/* Background */}
       <div className="flex flex-col h-2/3 w-full max-w-md mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg">
         {/* Messages Container */}
-        <div className="flex-1 h-max overflow-y-auto py-4 bg-gray-800 rounded-lg shadow-md mb-4 scrollbar-hide">
+        <div className="flex-1 overflow-y-auto py-4 bg-gray-800 rounded-lg shadow-md mb-4 scrollbar-hide">
           {messages.map(m => (
             <div key={m.id} className="whitespace-pre-wrap mb-2 p-2">
-              <strong className={m.role === 'user' ? 'text-orange-500' : 'text-fuchsia-500'}>
+              <strong className={m.role === 'user' ? 'text-purple-500' : 'text-fuchsia-500'}>
                 {m.role === 'user' ? 'User: ' : 'Tuah: '}
               </strong>
               <span className="text-white">{m.content}</span>
@@ -33,12 +33,12 @@ export default function Chat() {
           />
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full py-2 px-4 bg-lightBlue transition-colors duration-300 text-white font-semibold rounded-md hover:bg-darkBlue"
           >
             Send
           </button>
         </form>
       </div>
-    </>
+    </section>
   );
 }

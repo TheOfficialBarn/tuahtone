@@ -9,8 +9,8 @@ export default function SongsBlock({ playlistId, language, flag }) {
 	const [tracks, setTracks] = useState([]);
 	const router = useRouter();
 
-	function handleSongClick(track, artist) {
-		const query = `track=${encodeURIComponent(track)}&artist=${encodeURIComponent(artist)}`;
+	function handleSongClick(track, artist, imageURL) {
+		const query = `track=${encodeURIComponent(track)}&artist=${encodeURIComponent(artist)}&image=${encodeURIComponent(imageURL)}`;
 		router.push(`/lyricsview?${query}`);
 	};
 
@@ -51,7 +51,7 @@ export default function SongsBlock({ playlistId, language, flag }) {
 			<ul>
 				{tracks.map((track, index) => (
 					<li key={index} className='text-center hover:text-gold transition-colors duration-300 cursor-pointer'>
-						<div onClick={() => handleSongClick(track.name, track.artists[0].name)}>
+						<div onClick={() => handleSongClick(track.name, track.artists[0].name, track.album.images[2]?.url || track.album.images[0].url)}>
 						{track.name} by {track.artists[0].name}
 						</div>
 					</li>

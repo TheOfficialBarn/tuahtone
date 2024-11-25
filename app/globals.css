@@ -58,7 +58,7 @@ h3 {
     color: #0A0A0A;
     border-radius: 5px;
     border: transparent 2px solid;
-    transition: border-color 700ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: border-color, 700ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .buttonStyle:hover {
   border-color: #BBA839;
@@ -70,6 +70,7 @@ h3 {
 }
 .secondaryButton:hover {
     background-color: #4e4e4e /* #1e293b */;
+    border-color: #4e4e4e;
 }
 
 #profileButton {
@@ -80,6 +81,7 @@ h3 {
 
 #profileButton:hover {
   background-color: #5E541D ;
+  border-color:transparent;
 }
 
 ::selection{

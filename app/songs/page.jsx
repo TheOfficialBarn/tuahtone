@@ -73,6 +73,7 @@ export default function Page() {
                             id={song.id}
                             track={song.name}
                             artist={song.artist}
+                            imageURL={song.imageURL}
                             deleteSong={deleteSong}
                         />
                     ))}

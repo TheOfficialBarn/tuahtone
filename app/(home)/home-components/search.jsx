@@ -1,6 +1,7 @@
 'use client';
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
@@ -11,8 +12,8 @@ export default function Search() {
 	const timeoutRef = useRef(null);
 	const router = useRouter();
 
-	function handleSongClick(track, artist) {
-		const query = `track=${encodeURIComponent(track)}&artist=${encodeURIComponent(artist)}`;
+	function handleSongClick(track, artist, imageURL) {
+		const query = `track=${encodeURIComponent(track)}&artist=${encodeURIComponent(artist)}&image=${encodeURIComponent(imageURL)}}`;
 		router.push(`/lyricsview?${query}`);
 	};
 
@@ -65,24 +66,36 @@ export default function Search() {
 
 	return (
 		<div className="w-full border-b border-slate-700">
-			<input
-				type="text"
-				placeholder="Search for your favorite song..."
-				className="p-4 rounded-xl bg-slate-800 w-full caret-gold focus:outline-none focus:ring-2 focus:ring-gold"
-				value={query}
-				onChange={handleSearch}
-			/>
+				<div className="relative">
+					<input
+						type="text"
+						placeholder="Search for your favorite song..."
+						className="p-4 pl-12 rounded-xl bg-slate-800 w-full caret-gold focus:outline-none focus:ring-2 focus:ring-gold duration-300"
+						value={query}
+						onChange={handleSearch}
+					/>
+					<div className="absolute left-4 top-1/2 -translate-y-1/2">
+						<Image 
+							src="/search.svg" 
+							width={20} 
+							height={20} 
+							alt="search"
+						/>
+					</div>
+				</div>
 			<ul className="mt-4">
 				{results.map((track) => (
 					<li 
 						key={track.id} 
 						className="flex items-center text-white p-2 border-b border-slate-700 hover:bg-slate-700 hover:bg-opacity-20 transition-colors duration-300"
-						onClick={() => handleSongClick(track.name, track.artists[0].name)}
+						onClick={() => handleSongClick(track.name, track.artists[0].name, track.album.images[2]?.url || track.images[0]?.url)}
 					>
-						<img
+						<Image
 							src={track.album.images[2]?.url || track.album.images[0]?.url} // Use smallest image if available
 							alt={`${track.name} album art`}
-							className="w-16 h-16 mr-4 rounded-md"
+							height={75}
+							width={75}
+							className="mr-4 rounded-md"
 						/>
 						<div>
 							<p className="font-medium">{track.name}</p>

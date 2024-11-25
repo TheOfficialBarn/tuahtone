@@ -6,7 +6,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '@/app/lib/firebase';
 import LyricLine from './lyricline';
 
-export default function LyricsView({ track, artist }) {
+export default function LyricsView({ track, artist, imageURL }) {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('');
@@ -43,7 +43,8 @@ export default function LyricsView({ track, artist }) {
       const songsRef = collection(db, 'users', user.uid, 'songs');
       const songDoc = await addDoc(songsRef, { 
         name: track, 
-        artist,
+        artist, //Shorthand for artist: artist
+        imageURL, //Using the shorthand again below
         timestamp: new Date()
       });
 
@@ -81,7 +82,7 @@ export default function LyricsView({ track, artist }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <section className="flex flex-col items-center justify-center">
       <h1>{track} By {artist}</h1>
       <pre className="bg-blue rounded-xl max-h-[65vh] overflow-y-auto px-8 py-4 md:w-5/6 w-11/12">
         {lyricsArr.length > 0 ? (
@@ -101,6 +102,6 @@ export default function LyricsView({ track, artist }) {
       */}
       {(lyricsArr[0] !== "No lyrics found." && lyricsArr.length !== 0) && <button onClick={addToLibrary} className='buttonStyle'>Add to Songs</button>}
       <p>{isLoading ? message : ""}</p>
-    </div>
+    </section>
   );
 }
