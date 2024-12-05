@@ -9,14 +9,14 @@ export default function Home(){
         <Search/>
         <h3 className="text-slate-700 ">Featured Songs</h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 my-4">
-            <SongsBlock language="Spanish" flag="🇲🇽" playlistId="37i9dQZEVXbO3qyFxbkOE1"/>
-            <SongsBlock language="English" flag="🇺🇸" playlistId="37i9dQZEVXbLRQDuF5jeBp"/>
+            <SongsBlock language="Spanish" flag="🇲🇽" playlistId="2yZOyN9DTowWG9jCpoZ3gl"/>
+            <SongsBlock language="English" flag="🇺🇸" playlistId="4EVmEZ50aF6mmr6tPpDJNI"/>
             {/* French */}
             <div className="lg:col-span-2 xl:col-span-1 h-full">
                 <SongsBlock
                     language="French"
                     flag="🇫🇷"
-                    playlistId="37i9dQZEVXbIPWwFssbupI"
+                    playlistId="20IuHjETE8ZjOrifZg6wQX"
                     className="h-full"
                 />
             </div>
